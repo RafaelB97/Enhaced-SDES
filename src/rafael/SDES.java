@@ -9,25 +9,28 @@ public class SDES {
     private String[][] s1 = {{"00", "01", "10", "11"},
                              {"10", "00", "01", "11"},
                              {"11", "00", "01", "01"},
-                             {"10", "01", "00", "11"} };
+                             {"10", "01", "00", "11"}};
 
-    public SDES(String text) {
+    private IKeysGenerator keys = null;
+
+    public SDES(String text, IKeysGenerator keys) {
+        this.keys = keys;
         String ip = IP(text);
         System.out.println("IP: " + ip);
         int mid = ip.length() / 2;
-        String f1 = Function(ip.substring(0,mid), ip.substring(mid));
+        String f1 = Function(ip.substring(0,mid), ip.substring(mid), keys.getK1());
         System.out.println(f1);
-        String f2 = Function(f1.substring(mid), f1.substring(0, mid));
+        String f2 = Function(f1.substring(mid), f1.substring(0, mid), keys.getK2());
         System.out.println(f2);
 
         String inv = IPInv(f2);
         System.out.println("IP Inv: " + inv);
     }
 
-    public String Function(String text1, String text2) {
+    public String Function(String text1, String text2, String key) {
         String ep = EP(text2);
         System.out.println("EP: " + ep);
-        String xor = XOR(ep, "11001100");
+        String xor = XOR(ep, key);
         System.out.println("XOR: " + xor);
         int mid = xor.length() / 2;
         String left = SBox(xor.substring(0,mid), true);

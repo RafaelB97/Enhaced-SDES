@@ -1,6 +1,6 @@
 package rafael;
 
-public class KeysGenerator {
+public class KeysGenerator implements IKeysGenerator {
     private String k1;
     private String k2;
 
@@ -55,5 +55,13 @@ public class KeysGenerator {
     public String P8(String key) {
         String temp[] = key.split("");
         return temp[5] + temp[2] + temp[6] + temp[3] + temp[7] + temp[4] + temp[9] + temp[8];
+    }
+
+    public String getK1() {
+        return k1;
+    }
+
+    public String getK2() {
+        return k2;
     }
 }
