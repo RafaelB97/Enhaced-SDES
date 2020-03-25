@@ -73,7 +73,7 @@ public class ColumnarTransposition {
             }
         }
 
-        return temp.trim();
+        return temp;
     }
 
     public static void main(String[] args) {

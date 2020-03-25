@@ -1,8 +1,20 @@
 package rafael;
 
 public class Enhanced {
+    private String columnarKey;
+    private ColumnarTransposition cl;
+    private ShiftRows sr;
+    private SDES sdes;
 
-    public String sdesFunction(String text, SDES sdes, Boolean flag) {
+    public Enhanced(String columnarKey, String sdesKey) {
+        this.columnarKey = columnarKey;
+        cl = new ColumnarTransposition();
+        sr = new ShiftRows();
+        IKeysGenerator keySDES = new KeysGenerator(sdesKey);
+        sdes = new SDES(keySDES);
+    }
+
+    public String sdesText(String text, Boolean flag) {
         String[] result = new String[text.length()];
         String res = "";
         for(int i = 0; i<text.length(); i++) {
@@ -25,21 +37,10 @@ public class Enhanced {
         return res;
     }
 
-    public void init() {
-        var text = "0123456789ABCDEFGHIJK";
+    public String encrypt(String text) {
         String temp = text;
-        var columnarKey = "3-1-2-0-4";
-        ColumnarTransposition cl = new ColumnarTransposition();
-        ShiftRows sr = new ShiftRows();
-        KeysGenerator keySDES = new KeysGenerator("1010101010");
-        SDES sdes = new SDES(keySDES);
 
-        /*
-        var encry = sdesFunction("Hola! Esta es una prueba de encryptamiento", sdes, true); // true -> Encrypt
-        var decry = sdesFunction(encry, sdes, false); // false -> Decrypt
-         */
-
-        for(int i = 0; i<3; i++) {
+        for (int i = 0; i < 3; i++) {
             temp = cl.encrypt(temp,columnarKey);
             System.out.println("Encrypt Columnar Transposition " + i + ": " + temp);
         }
@@ -49,8 +50,15 @@ public class Enhanced {
 
         // -------------------------------------------
 
-        temp = sdesFunction(temp, sdes, true);
-        temp = sdesFunction(temp, sdes, false);
+        temp = sdesText(temp, true);
+
+        return temp;
+    }
+
+    public String decrypt(String text) {
+        String temp = text;
+
+        temp = sdesText(temp, false);
 
         // -------------------------------------------
 
@@ -61,5 +69,10 @@ public class Enhanced {
             temp = cl.decrypt(temp,columnarKey);
             System.out.println("Decrypt Columnar Transposition " + i + ": " + temp);
         }
+        return temp;
+    }
+
+    public void setColumnarKey(String columnarKey) {
+        this.columnarKey = columnarKey;
     }
 }

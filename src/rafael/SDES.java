@@ -21,9 +21,9 @@ public class SDES {
         String ip = IP(text);
         // System.out.println("IP: " + ip);
         int mid = ip.length() / 2;
-        String f1 = Function(ip.substring(0,mid), ip.substring(mid), keys.getK1());
+        String f1 = function(ip.substring(0,mid), ip.substring(mid), keys.getK1());
         // System.out.println(f1);
-        String f2 = Function(f1.substring(mid), f1.substring(0, mid), keys.getK2());
+        String f2 = function(f1.substring(mid), f1.substring(0, mid), keys.getK2());
         // System.out.println(f2);
 
         String inv = IPInv(f2);
@@ -35,9 +35,9 @@ public class SDES {
         String ip = IP(text);
         // System.out.println("IP: " + ip);
         int mid = ip.length() / 2;
-        String f1 = Function(ip.substring(0,mid), ip.substring(mid), keys.getK2());
+        String f1 = function(ip.substring(0,mid), ip.substring(mid), keys.getK2());
         // System.out.println(f1);
-        String f2 = Function(f1.substring(mid), f1.substring(0, mid), keys.getK1());
+        String f2 = function(f1.substring(mid), f1.substring(0, mid), keys.getK1());
         // System.out.println(f2);
 
         String inv = IPInv(f2);
@@ -45,14 +45,14 @@ public class SDES {
         return inv;
     }
 
-    public String Function(String text1, String text2, String key) {
+    public String function(String text1, String text2, String key) {
         String ep = EP(text2);
         // System.out.println("EP: " + ep);
         String xor = XOR(ep, key);
         // System.out.println("XOR: " + xor);
         int mid = xor.length() / 2;
-        String left = SBox(xor.substring(0,mid), true); //true => SBox0
-        String right = SBox(xor.substring(mid), false); //false => SBox1
+        String left = sBox(xor.substring(0,mid), true); //true => SBox0
+        String right = sBox(xor.substring(mid), false); //false => SBox1
         // System.out.println("S0: " + left + " S1: " + right);
         String p4 = P4(left + right);
         // System.out.println("P4: " + p4);
@@ -81,7 +81,7 @@ public class SDES {
         return temp[1] + temp[3] + temp[2] + temp[0];
     }
 
-    public String SBox(String text, Boolean opc) {
+    public String sBox(String text, Boolean opc) {
         // String str = String.valueOf(text.charAt(0) + text.charAt(3));
         String StrRow = "" + text.charAt(0) + text.charAt(3);
         int row = Integer.parseInt(StrRow, 2);

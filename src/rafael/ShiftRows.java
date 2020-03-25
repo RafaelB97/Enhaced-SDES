@@ -1,8 +1,10 @@
 package rafael;
 
 public class ShiftRows {
+    private int wordLength;
 
     public String encrypt(String text) {
+        wordLength = text.length();
         String[] temp = stringToArray(text);
         for(int i = 0; i<temp.length; i++) {
             temp[i] = temp[i].substring(i) + temp[i].substring(0,i);
@@ -20,13 +22,12 @@ public class ShiftRows {
             // System.out.println(temp[i]);
         }
         // System.out.println(String.join("", temp));
-        return String.join("", temp).trim();
+        return String.join("", temp).substring(0,wordLength);
     }
 
     public String[] stringToArray(String text) {
         // System.out.println(text);
-        int wordLength = text.length();
-        int columns = (int) Math.sqrt(text.length()) + 1;
+        int columns = (int) Math.sqrt(wordLength) + 1;
         // int columns = 11;
         int rows = (wordLength % columns == 0) ? wordLength / columns : (wordLength / columns) + 1;
         // System.out.println("wordLength: " + wordLength);
@@ -36,7 +37,7 @@ public class ShiftRows {
         String[] temp = new String[rows];
         int j = 0;
         for(int i = 0; i<temp.length; i++) {
-            if(j+columns<=wordLength) {
+            if(j+columns<=text.length()) {
                 temp[i] = text.substring(j, j+columns);
                 // System.out.println(temp[i] + " " + j + " " + (j+columns));
                 j = j + columns;
