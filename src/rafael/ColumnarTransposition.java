@@ -1,18 +1,33 @@
 package rafael;
 
 public class ColumnarTransposition {
-    public String encrypt(String text) {
-        String[][] matrix = new String[5][5];
-        String temp = "";
-        int[] key = {3, 1, 2, 0, 4};
-        // int[] key = {1, 2, 0};
+    public int[] keyResolution(String keyStr) {
+        String[] temp = keyStr.split("-");
+        int[] key = new int[temp.length];
+        for(int i = 0; i<key.length; i++) {
+            key[i] = Integer.parseInt(temp[i]);
+        }
+        return key;
+    }
 
-        var n = 0;
+    public String encrypt(String text, String strKey) {
+        int[] key = keyResolution(strKey);
+        var m = key.length;
+        var n = (text.length()%m == 0) ? text.length()/m : (text.length()/m) + 1;
+        String[][] matrix = new String[n][m];
+        String temp = "";
+
+        var counter = 0;
         for(int i = 0; i<matrix.length; i++) {
             for(int j = 0; j<matrix[i].length; j++) {
-                matrix[i][j] = "" + text.charAt(n);
-                System.out.print(matrix[i][j] + " ");
-                n++;
+                if(counter<text.length()) {
+                    matrix[i][j] = "" + text.charAt(counter);
+                    System.out.print(matrix[i][j] + " ");
+                    counter++;
+                } else {
+                    matrix[i][j] = "x";
+                    System.out.print(matrix[i][j] + " ");
+                }
             }
             System.out.println();
         }
@@ -29,18 +44,20 @@ public class ColumnarTransposition {
         return temp;
     }
 
-    public String decrypt(String text) {
-        String[][] matrix = new String[5][5];
+    public String decrypt(String text, String strKey) {
+        int[] key = keyResolution(strKey);
+        var m = key.length;
+        var n = (text.length()%m == 0) ? text.length()/m : (text.length()/m) + 1;
+        String[][] matrix = new String[n][m];
         String temp = "";
-        int[] key = {3, 1, 2, 0, 4};
 
-        var n = 0;
+        var counter = 0;
         for(int i : key) {
             for(int j = 0; j<matrix.length; j++) {
                 // System.out.print(j + " " + i + " | ");
-                matrix[j][i] = "" + text.charAt(n);
+                matrix[j][i] = "" + text.charAt(counter);
                 System.out.print(matrix[j][i] + " ");
-                n++;
+                counter++;
             }
             System.out.println();
         }
@@ -56,8 +73,7 @@ public class ColumnarTransposition {
 
     public static void main(String[] args) {
         ColumnarTransposition cl = new ColumnarTransposition();
-        // cl.encrypt("DIDYOUSEE");
-        System.out.println(cl.encrypt("0123456789ABCDEFGHIJKLMNO"));
-        System.out.println(cl.decrypt("38DIN16BGL27CHM05AFK49EJO"));
+        System.out.println(cl.decrypt(cl.encrypt("DIDYOUSEE", "3-1-2-0-4"), "3-1-2-0-4"));
+        // System.out.println(cl.encrypt("0123456789ABCDEFGHIJKLMNO", "3-1-2-0-4"));
     }
 }
