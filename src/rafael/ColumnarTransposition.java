@@ -22,23 +22,23 @@ public class ColumnarTransposition {
             for(int j = 0; j<matrix[i].length; j++) {
                 if(counter<text.length()) {
                     matrix[i][j] = "" + text.charAt(counter);
-                    System.out.print(matrix[i][j] + " ");
+                    // System.out.print(matrix[i][j] + " ");
                     counter++;
                 } else {
-                    matrix[i][j] = "x";
-                    System.out.print(matrix[i][j] + " ");
+                    matrix[i][j] = " ";
+                    // System.out.print(matrix[i][j] + " ");
                 }
             }
-            System.out.println();
+            // System.out.println();
         }
 
         for(int i : key) {
             for(int j = 0; j<matrix.length; j++) {
                 // System.out.print(j + " " + i + " | ");
-                System.out.print(matrix[j][i] + " ");
+                // System.out.print(matrix[j][i] + " ");
                 temp = temp + matrix[j][i];
             }
-            System.out.println();
+            // System.out.println();
         }
 
         return temp;
@@ -54,12 +54,17 @@ public class ColumnarTransposition {
         var counter = 0;
         for(int i : key) {
             for(int j = 0; j<matrix.length; j++) {
-                // System.out.print(j + " " + i + " | ");
-                matrix[j][i] = "" + text.charAt(counter);
-                System.out.print(matrix[j][i] + " ");
-                counter++;
+                if(counter<text.length()) {
+                    // System.out.print(j + " " + i + " | ");
+                    matrix[j][i] = "" + text.charAt(counter);
+                    // System.out.print(matrix[j][i] + " ");
+                    counter++;
+                } else {
+                    matrix[j][i] = " ";
+
+                }
             }
-            System.out.println();
+            // System.out.println();
         }
 
         for(int i = 0; i<matrix.length; i++) {
@@ -68,12 +73,17 @@ public class ColumnarTransposition {
             }
         }
 
-        return temp;
+        return temp.trim();
     }
 
     public static void main(String[] args) {
         ColumnarTransposition cl = new ColumnarTransposition();
-        System.out.println(cl.decrypt(cl.encrypt("DIDYOUSEE", "3-1-2-0-4"), "3-1-2-0-4"));
+        String text = "DIDYOUSEE";
+        System.out.println(text);
+        String encrypText = cl.encrypt(text,"3-1-2-0-4");
+        System.out.println(encrypText);
+        String decryptText = cl.decrypt(encrypText,"3-1-2-0-4");
+        System.out.println(decryptText);
         // System.out.println(cl.encrypt("0123456789ABCDEFGHIJKLMNO", "3-1-2-0-4"));
     }
 }

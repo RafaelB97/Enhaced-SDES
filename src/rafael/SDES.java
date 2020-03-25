@@ -13,33 +13,51 @@ public class SDES {
 
     private IKeysGenerator keys = null;
 
-    public SDES(String text, IKeysGenerator keys) {
+    public SDES(IKeysGenerator keys) {
         this.keys = keys;
+    }
+
+    public String encrypt(String text) {
         String ip = IP(text);
-        System.out.println("IP: " + ip);
+        // System.out.println("IP: " + ip);
         int mid = ip.length() / 2;
         String f1 = Function(ip.substring(0,mid), ip.substring(mid), keys.getK1());
-        System.out.println(f1);
+        // System.out.println(f1);
         String f2 = Function(f1.substring(mid), f1.substring(0, mid), keys.getK2());
-        System.out.println(f2);
+        // System.out.println(f2);
 
         String inv = IPInv(f2);
-        System.out.println("IP Inv: " + inv);
+        // System.out.println("IP Inv: " + inv);
+        return inv;
+    }
+
+    public String decrypt(String text) {
+        String ip = IP(text);
+        // System.out.println("IP: " + ip);
+        int mid = ip.length() / 2;
+        String f1 = Function(ip.substring(0,mid), ip.substring(mid), keys.getK2());
+        // System.out.println(f1);
+        String f2 = Function(f1.substring(mid), f1.substring(0, mid), keys.getK1());
+        // System.out.println(f2);
+
+        String inv = IPInv(f2);
+        // System.out.println("IP Inv: " + inv);
+        return inv;
     }
 
     public String Function(String text1, String text2, String key) {
         String ep = EP(text2);
-        System.out.println("EP: " + ep);
+        // System.out.println("EP: " + ep);
         String xor = XOR(ep, key);
-        System.out.println("XOR: " + xor);
+        // System.out.println("XOR: " + xor);
         int mid = xor.length() / 2;
         String left = SBox(xor.substring(0,mid), true); //true => SBox0
         String right = SBox(xor.substring(mid), false); //false => SBox1
-        System.out.println("S0: " + left + " S1: " + right);
+        // System.out.println("S0: " + left + " S1: " + right);
         String p4 = P4(left + right);
-        System.out.println("P4: " + p4);
+        // System.out.println("P4: " + p4);
         String xor2 = XOR(p4, text1);
-        System.out.println("XOR: " + xor2);
+        // System.out.println("XOR: " + xor2);
         return xor2 + text2;
     }
 
@@ -69,9 +87,9 @@ public class SDES {
         int row = Integer.parseInt(StrRow, 2);
         String StrColumn = "" + text.charAt(1) + text.charAt(2);
         int column = Integer.parseInt(StrColumn, 2);
-        System.out.println(row + " " + column);
+        // System.out.println(row + " " + column);
         var i = (opc) ? s0[row][column] : s1[row][column];
-        System.out.println(i);
+        // System.out.println(i);
         return i;
     }
 

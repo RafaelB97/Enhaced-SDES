@@ -20,7 +20,7 @@ public class ShiftRows {
             // System.out.println(temp[i]);
         }
         // System.out.println(String.join("", temp));
-        return String.join("", temp);
+        return String.join("", temp).trim();
     }
 
     public String[] stringToArray(String text) {

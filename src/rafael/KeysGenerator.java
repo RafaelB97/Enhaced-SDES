@@ -6,22 +6,22 @@ public class KeysGenerator implements IKeysGenerator {
 
     public KeysGenerator(String key) {
         String temp = P10(key);
-        System.out.println("P10: " + temp);
+        // System.out.println("P10: " + temp);
         int mid = temp.length() / 2;
-        System.out.println("Split");
-        System.out.println(temp.substring(0, mid));
-        System.out.println(temp.substring(mid));
+        // System.out.println("Split");
+        // System.out.println(temp.substring(0, mid));
+        // System.out.println(temp.substring(mid));
         String shift1[] = {LS1(temp.substring(0, mid)), LS1(temp.substring(mid))};
-        System.out.println("Shift1");
-        System.out.println(shift1[0]);
-        System.out.println(shift1[1]);
+        // System.out.println("Shift1");
+        // System.out.println(shift1[0]);
+        // System.out.println(shift1[1]);
         k1 = P8(shift1[0] + shift1[1]);
         System.out.println("Key1: " + k1);
 
-        System.out.println("Shift2");
+        // System.out.println("Shift2");
         String shift2[] = {LS2(shift1[0]), LS2(shift1[1])};
-        System.out.println(shift2[0]);
-        System.out.println(shift2[1]);
+        // System.out.println(shift2[0]);
+        // System.out.println(shift2[1]);
 
         k2 = P8(shift2[0] + shift2[1]);
         System.out.println("Key2: " + k2);
