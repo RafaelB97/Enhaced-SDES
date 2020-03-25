@@ -33,8 +33,8 @@ public class SDES {
         String xor = XOR(ep, key);
         System.out.println("XOR: " + xor);
         int mid = xor.length() / 2;
-        String left = SBox(xor.substring(0,mid), true);
-        String right = SBox(xor.substring(mid), false);
+        String left = SBox(xor.substring(0,mid), true); //true => SBox0
+        String right = SBox(xor.substring(mid), false); //false => SBox1
         System.out.println("S0: " + left + " S1: " + right);
         String p4 = P4(left + right);
         System.out.println("P4: " + p4);
